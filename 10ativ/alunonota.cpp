@@ -2,8 +2,10 @@
 #include <string>
 #include <vector>
 #include <limits>
+#include <stdexcept>
 
-/*  ### 3. Diário de Notas Acadêmicas
+
+/*  ### 3. Diário de Notas Acadêmicasd ddddddddddddd
     Contexto: Um professor precisa calcular médias da turma.
     
     * Struct: Aluno (matricula, nota1, nota2).
@@ -21,7 +23,7 @@ typedef struct {
 
 int main() {
     vector<Aluno> turma;
-    int opcao;
+    int opcao, valid1, valid2;
     double nota1, nota2;
     string matricula;
     char * pEnd;
@@ -37,13 +39,30 @@ int main() {
 
         switch (opcao) {
             case 1:
+                valid1 = 0;
+                valid2 = 0;
+                
                 cout << "Digite a matricula do aluno: ";
                 getline(cin, matricula);
+                do { // NAO PERMITIR ACIMA DE 10 E ABAIXO DE 0
                 cout << "Digite a primeira nota: ";
-                cin >> nota1;
+                cin >> nota1; 
+                if (nota1 >= 0 && nota1 <= 10){
+                    valid1 = 1;
+                } else {
+                    cout << "\nPrimeira nota acima de 10 ou abaixo de 0\n";
+                }} while (valid1 == 0);
+                
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpa o buffer de entrada
+                do { // nao permitir acima de 10 ou abaixo de 0
                 cout << "Digite a segunda nota: ";
-                cin >> nota2;
+                cin >> nota2; 
+                if (nota2 >= 0 && nota2 <= 10){
+                    valid2 = 1;
+                } else {
+                    cout << "\nSegunda nota acima de 10 ou abaixo de 0\n";
+                }} while (valid2 == 0);
+                
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpa o buffer de entrada
 
                 turma.push_back({matricula, nota1, nota2});
